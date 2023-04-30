@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { MainColor, PointColor } from "../config/styles";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,14 +27,26 @@ export default function BottomTab() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        screenOptions={{
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = focused ? "md-home-sharp" : "md-home-outline";
+              return <Ionicons name={iconName} size={size} color={color} />;
+            } else if (route.name === "Totaltime") {
+              iconName = focused ? "stopwatch" : "stopwatch-outline";
+              console.log(route.name);
+              return <Ionicons name={iconName} size={size} color={color} />;
+            }
+          },
           headerShown: false,
           tabBarStyle: {
             backgroundColor: MainColor,
           },
           tabBarActiveTintColor: PointColor,
           tabBarInactiveTintColor: "white",
-        }}
+        })}
       >
         <Tab.Screen name="Home" component={Home}></Tab.Screen>
         <Tab.Screen name="Totaltime" component={TotalTime} />

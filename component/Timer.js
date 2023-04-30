@@ -15,7 +15,7 @@ export default function Timer({ SET, MINUTES, SECONDS }) {
     const timer =
       start &&
       setTimeout(() => {
-        if (seconds === 0) {
+        if (seconds < 1) {
           setMinutes(minutes - 1);
           setSeconds(59);
         } else {

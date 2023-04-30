@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { MainColor, PointColor } from "../config/styles";
 
 export default function TotalTime() {
   const [seconds, setSeconds] = useState(0);
@@ -31,76 +38,142 @@ export default function TotalTime() {
       : useEffect(() => {}, [() => seconds]);
   }
 
-  const startBtn = (title, isStart) => {
+  const startBtn = (title, isStart, outlineColor, innerColor, brColor) => {
     return (
-      <Text style={{ fontSize: 20, fontWeight: "600" }} onPress={isStart}>
-        {title}
-      </Text>
+      <TouchableOpacity
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          width: 95,
+          height: 95,
+          backgroundColor: outlineColor,
+          borderRadius: 100,
+          borderWidth: 5,
+          borderColor: brColor,
+        }}
+        onPress={isStart}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: 72,
+            height: 72,
+            borderRadius: 100,
+            backgroundColor: innerColor,
+          }}
+        >
+          <Text style={{ fontSize: 20, fontWeight: "600" }}>{title}</Text>
+        </View>
+      </TouchableOpacity>
     );
   };
   return (
-    <SafeAreaView
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
+    <SafeAreaView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 32, fontWeight: "900" }}>총 시간</Text>
+        <View>
+          <Text style={{ fontSize: 50, fontWeight: "900", color: PointColor }}>
+            Total Time
+          </Text>
+          <Text
+            style={{
+              fontSize: 50,
+              fontWeight: "900",
+              color: "white",
+              position: "absolute",
+              top: 0,
+              left: 4,
+            }}
+          >
+            Total Time
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View>
+          <Text
+            style={{
+              fontSize: 65,
+              fontWeight: "800",
+              color: PointColor,
+              marginVertical: 50,
+              letterSpacing: 5,
+            }}
+          >
+            {hours < 10 ? `0${hours}` : hours}:
+            {minutes < 10 ? `0${minutes}` : minutes}:
+            {seconds < 10 ? `0${seconds}` : seconds}
+          </Text>
+          <Text
+            style={{
+              fontSize: 65,
+              fontWeight: "800",
+              color: "white",
+              marginVertical: 50,
+              letterSpacing: 5,
+              position: "absolute",
+              top: 0,
+              left: 4,
+            }}
+          >
+            {hours < 10 ? `0${hours}` : hours}:
+            {minutes < 10 ? `0${minutes}` : minutes}:
+            {seconds < 10 ? `0${seconds}` : seconds}
+          </Text>
+        </View>
       </View>
       <View style={styles.buttonArea}>
         {start
-          ? startBtn("종료", () => {
+          ? startBtn(
+              "종료",
+              () => {
+                setStart(false);
+              },
+              "white",
+              PointColor,
+              PointColor
+            )
+          : startBtn(
+              "시작",
+              () => {
+                setStart(true);
+              },
+              PointColor,
+              "white",
+              "white"
+            )}
+        <View>
+          {startBtn(
+            "초기화",
+            () => {
+              setSeconds(0);
+              setMinutes(0);
+              setHours(0);
               setStart(false);
-            })
-          : startBtn("시작", () => {
-              setStart(true);
-            })}
-        {startBtn("저장 및 초기화", () => {
-          setSeconds(0);
-          setMinutes(0);
-          setHours(0);
-          setStart(false);
-        })}
-      </View>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 40, fontWeight: "600" }}>
-          {hours < 10 ? `0${hours}` : hours}:
-          {minutes < 10 ? `0${minutes}` : minutes}:
-          {seconds < 10 ? `0${seconds}` : seconds}
-        </Text>
+            },
+            "lightcoral",
+            "white",
+            "white"
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonArea: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    marginVertical: 15,
-  },
-  inputArea: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputBox: {
-    width: "80%",
-    textAlign: "center",
-    fontSize: 20,
-  },
-  inputTitle: {
-    fontSize: 40,
-    fontWeight: "800",
-  },
-  titleResetBtn: {
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: MainColor,
   },
-  resetTitleText: {
-    textAlign: "center",
-    width: 100,
-    height: 20,
-    backgroundColor: "tomato",
+  buttonArea: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 15,
   },
 });
