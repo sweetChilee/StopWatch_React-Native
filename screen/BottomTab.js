@@ -16,14 +16,6 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
 export default function BottomTab() {
-  // const [dark, setDark] = useState(false);
-
-  // const MainColors = dark ? "rgb(44, 44, 44)" : "white";
-  // const reverseMainColors = dark ? "white" : "rgb(44, 44, 44)";
-  // const TextColor = dark ? "white" : "rgb(44, 44, 44)";
-  // const PointColor = dark ? "#8C8CED" : "rgb(44, 44, 44)";
-  // const PointColors = dark ? "rgb(44, 44, 44)" : "#8C8CED";
-
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -36,7 +28,6 @@ export default function BottomTab() {
               return <Ionicons name={iconName} size={size} color={color} />;
             } else if (route.name === "Totaltime") {
               iconName = focused ? "stopwatch" : "stopwatch-outline";
-              console.log(route.name);
               return <Ionicons name={iconName} size={size} color={color} />;
             }
           },

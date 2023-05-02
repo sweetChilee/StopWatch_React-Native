@@ -126,7 +126,7 @@ export default function TotalTime() {
       <View style={styles.buttonArea}>
         {start
           ? startBtn(
-              "종료",
+              "정지",
               () => {
                 setStart(false);
               },

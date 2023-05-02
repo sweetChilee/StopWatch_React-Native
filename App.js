@@ -1,15 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
-import Home from "./screen/Home";
+import { StyleSheet } from "react-native";
 import BottomTab from "./screen/BottomTab";
-import { useState } from "react";
-import Test from "./screen/Test";
 
 export default function App() {
   return (
@@ -19,9 +10,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

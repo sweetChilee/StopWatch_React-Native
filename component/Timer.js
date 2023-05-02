@@ -12,25 +12,28 @@ export default function Timer({ SET, MINUTES, SECONDS }) {
   const frontCountText = start ? PointColor : "white";
 
   useEffect(() => {
-    const timer =
-      start &&
-      setTimeout(() => {
-        if (seconds < 1) {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        } else {
-          setSeconds(seconds - 1);
-        }
-      }, 1000);
-    if (minutes === 0 && seconds === 0) {
-      clearTimeout(timer);
-      setWorkNum(workNum - 1);
-      setSeconds(SECONDS);
-      setMinutes(MINUTES);
-      setStart(false);
+    const timeoutId = setTimeout(() => {
+      if (seconds === 0 && minutes === 0) {
+        clearTimeout(timeoutId);
+        setWorkNum((prevSet) => prevSet - 1);
+        setSeconds(SECONDS);
+        setMinutes(MINUTES);
+        setStart(false);
+      } else if (seconds === 0) {
+        setMinutes((prevMinutes) => prevMinutes - 1);
+        setSeconds(59);
+      } else {
+        setSeconds((prevSeconds) => prevSeconds - 1);
+      }
+    }, 1000);
+
+    if (start) {
+      timeoutId;
+    } else {
+      clearTimeout(timeoutId);
     }
-    return () => clearTimeout(timer);
-  }, [minutes, seconds, start]);
+    return () => clearTimeout(timeoutId);
+  }, [seconds, minutes, start]);
 
   return (
     <View style={styles.container}>
@@ -105,7 +108,7 @@ export default function Timer({ SET, MINUTES, SECONDS }) {
                 borderColor: PointColor,
                 width: 80,
                 height: 80,
-                borderWidth: 8,
+                borderWidth: 6,
               }}
             >
               <Text style={styles.activeBtnText}>시작</Text>
